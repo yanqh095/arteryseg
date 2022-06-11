@@ -41,6 +41,7 @@ def load_label_datadict(json_file, image_root):
         objs.append(obj)
         record['annotations'] = objs
         dataset_dicts.append(record)
+    
     return dataset_dicts
 
 
@@ -73,6 +74,31 @@ def load_unlabel_datadict(json_file, image_root):
             if image_id not in annos:
                 dataset_dicts.append(record)
     return dataset_dicts
+
+
+def load_test_datadict(image_root):
+    """
+    以路径内所有图像为准
+    filename, artery, slc, bbox, lumen, outer
+    file_path = image_root + filename
+    supervised branch & validation
+    """
+    dataset_dicts = []
+    for image_id in sorted(os.listdir(image_root)):
+        if image_id.split('.')[-1] in ['jpg', 'png']:
+            record = {}
+            file_name = os.path.join(image_root, image_id)
+            record['file_name'] = file_name
+            artery = int(image_id[1:3])
+            slc = int(image_id.split('_')[1].split('.')[0])
+            image_id = int('1%02d%04d'%(artery, slc))
+            record['image_id'] = image_id
+            record['height'] = 160
+            record['width'] = 320
+            dataset_dicts.append(record)
+    
+    return dataset_dicts
+
 
 _datasets = {}
 

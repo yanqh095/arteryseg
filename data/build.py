@@ -128,9 +128,11 @@ def build_detection_semisup_train_loader_two_crops(cfg, mapper_s, mapper_u):
     
     # num of sup artery, filter
     all_arterys = np.unique([os.path.basename(d['file_name'])[:3] for d in label_dicts])
-    selected = np.random.choice(all_arterys, int(cfg.DATASETS.NUMSUPARTERY))
+    #print(all_arterys)
+    selected = np.random.choice(all_arterys, int(cfg.DATASETS.NUMSUPARTERY), replace=False)
     
     label_dicts = [d for d in label_dicts if os.path.basename(d['file_name'])[:3] in selected]
+    print(np.unique([os.path.basename(d['file_name'])[:3] for d in label_dicts]))
 
     label_dataset = DatasetFromList(label_dicts, copy=False)
     # exclude the labeled set from unlabeled dataset

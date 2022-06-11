@@ -737,17 +737,14 @@ class ArteryTrainer(DefaultTrainer):
             for key in record_dict.keys():
                 if key[:4] == "loss":
                     if key == "loss_mask_pseudo":
-                        # pseudo bbox regression <- 0
+                        # pseudo mask loss <- 0
                         loss_dict[key] = record_dict[key] * 0
                     # loss不包含box regression这一项，但我们是包含的
                     # 基于seg微调的box pseudo, 仅基于cls prob或iou score会引入bias?
                     # 仅box会变成pseudo, mask不做pseudo
 
                     if key[-6:] == "pseudo":  # unsupervised loss
-                        loss_dict[key] = (
-                            record_dict[key] *
-                            self.cfg.SEMISUPNET.UNSUP_LOSS_WEIGHT
-                        )
+                        loss_dict[key] = record_dict[key] * self.cfg.SEMISUPNET.UNSUP_LOSS_WEIGHT
                     else:  # supervised loss
                         loss_dict[key] = record_dict[key] * 1
 

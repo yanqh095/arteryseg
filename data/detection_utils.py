@@ -20,7 +20,7 @@ def build_strong_augmentation(cfg, is_train):
         augmentation.append(
             transforms.RandomApply([transforms.ColorJitter(0.4, 0.4, 0.4, 0.1)], p=0.8)
         )
-        augmentation.append(transforms.RandomGrayscale(p=0.2))
+        #augmentation.append(transforms.RandomGrayscale(p=0.2))
         augmentation.append(transforms.RandomApply([GaussianBlur([0.1, 2.0])], p=0.5))
 
         randcrop_transform = transforms.Compose(

@@ -1,4 +1,5 @@
 _BASE_: "../Base-RCNN-FPN.yaml"
+VIS_PERIOD: 100
 MODEL:
   META_ARCHITECTURE: "TwoStagePseudoLabGeneralizedRCNN"
   WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
@@ -35,7 +36,7 @@ SOLVER:
   CHECKPOINT_PERIOD: 500
 DATASETS:
   DEPTH: 3
-  STRIDE: 2
+  STRIDE: 3
   NUMSUPARTERY: 16
   CROSS_DATASET: False
   TRAIN: ("fold1_train",)
@@ -49,7 +50,7 @@ INPUT:
 SEMISUPNET:
   Trainer: "artery"
   BBOX_THRESHOLD: 0.5
-  IOU_THRESHOLD: 0.6
+  IOU_THRESHOLD: 0.5
   TEACHER_UPDATE_ITER: 1
   BURN_UP_STEP: 2000
   EMA_KEEP_RATE: 0.99

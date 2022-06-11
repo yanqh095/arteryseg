@@ -110,6 +110,9 @@ class DatasetMapperTwoCropLabel(DatasetMapper):
         if not self.is_train:
             dataset_dict.pop("annotations", None)
             dataset_dict.pop("sem_seg_file_name", None)
+            dataset_dict["image"] = torch.as_tensor(
+                np.ascontiguousarray(image_weak_aug.transpose(2, 0, 1))
+            )
             return dataset_dict
 
         if "annotations" in dataset_dict:
@@ -326,4 +329,3 @@ s
         return (dataset_dict, dataset_dict_key)
     
 
-# test的情况下，不用aug
