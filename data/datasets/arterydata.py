@@ -26,7 +26,7 @@ def load_label_datadict(json_file, image_root):
         record = {}
         image_id = images[i]['id']
         annoi = annos[image_id]
-        record['file_name'] = images[i]['file_name']
+        record['file_name'] = os.path.join(image_root,images[i]['file_name'])
         record['image_id'] = images[i]['id']
         record['height'] = images[i]['height']
         record['width'] = images[i]['width']
@@ -101,12 +101,12 @@ def load_test_datadict(image_root):
 
 
 _datasets = {}
-
+ROOT = '/data1/qhong/seg/detectron2/'
 for i in range(5):
-    _datasets['fold%d_train'%i] = ('/data1/qhong/seg/detectron2/arteryseg/artery/%02d/annotations/artery_train.json'%i,
-     '/data1/qhong/seg/detectron2/arteryseg/artery/%02d/train'%i)
-    _datasets['fold%d_test'%i] = ('/data1/qhong/seg/detectron2/arteryseg/artery/%02d/annotations/artery_test.json'%i,
-     '/data1/qhong/seg/detectron2/arteryseg/artery/%02d/test'%i)
+    _datasets['fold%d_train'%i] = (ROOT+'arteryseg/artery/%02d/annotations/artery_train.json'%i,
+     ROOT+'arteryseg/artery/%02d/train'%i)
+    _datasets['fold%d_test'%i] = (ROOT+'arteryseg/artery/%02d/annotations/artery_test.json'%i,
+     ROOT+'arteryseg/artery/%02d/test'%i)
     
 
 def load_artery_train(name, json_file, image_root):
